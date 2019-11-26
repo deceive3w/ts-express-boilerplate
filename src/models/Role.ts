@@ -3,7 +3,7 @@ import mongoose, { Document } from "mongoose"
 export interface Role{
     _id?: string,
     name?: string,
-    permissions?: [string],
+    permissions?: string[],
 }
 
 var RoleSchema = new mongoose.Schema({

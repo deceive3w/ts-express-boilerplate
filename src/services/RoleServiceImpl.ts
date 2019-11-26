@@ -1,16 +1,14 @@
 import { inject, injectable } from "inversify";
 import { Role } from "../models";
-import { LoginSuccess } from "../types";
-import AuthService from '../security/AuthService';
-import { UserService,Repository } from "../interfaces";
 import RoleService from "../interfaces/RoleService.interface";
 import RoleRepository from "../repositories/RoleRepository";
 
 @injectable()
 export default class RoleServiceImpl implements RoleService {
     @inject('RoleRepository') roleRepository: RoleRepository
-    createRole(role: Role): Promise<Role> {
-        return this.roleRepository.create(role)
+    async createRole(role: Role): Promise<Role> {
+        let data = await this.roleRepository.create(role)
+        return data
     }    
     async updatePermissions(_id: string, data: Role): Promise<Role> {
         await this.roleRepository.update({_id}, data)
