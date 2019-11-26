@@ -15,4 +15,14 @@ export default class AuthService{
             expiresIn: JWT_EXPIRED,
         })
     }
+    getPayload(token): object{
+        try{
+            let jwtPayload = jwt.verify(token, JWT_SECRET) as object
+            return jwtPayload
+        }catch(e){
+            return {
+                error: 'Invalid Token.'
+            }
+        }
+    }
 }

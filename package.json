@@ -9,7 +9,7 @@
     "@types/jsonwebtoken": "^8.3.5",
     "@types/mongoose": "^5.5.32",
     "@types/supertest": "^2.0.8",
-    "bcrypt": "^3.0.7",
+    "bcrypt": "3.0.6",
     "express": "^4.17.1",
     "express-validator": "^6.3.0",
     "inversify": "^5.0.1",
@@ -23,7 +23,8 @@
     "reflect-metadata": "^0.1.13",
     "supertest": "^4.0.2",
     "ts-jest": "^24.2.0",
-    "typescript": "^3.7.2"
+    "typescript": "^3.7.2",
+    "validator": "^12.1.0"
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^1.1.3",

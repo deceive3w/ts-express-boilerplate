@@ -12,15 +12,16 @@ export default class AuthMiddleware extends BaseMiddleware{
         next: express.NextFunction
     ){
         let jwtPayload = {}
-        const token = req.headers["authorization"]
+        let token = req.headers["authorization"]
         try{
+            if(token){
+                token = token.split(" ")[1]
+            }
             jwtPayload = jwt.verify(token, JWT_SECRET)
-            res.locals.jwtPayload = jwtPayload
         }catch(error){
             res.status(401).send()
             return
         }
-
         next()
     }
 }

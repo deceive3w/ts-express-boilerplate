@@ -1,17 +1,18 @@
 import { inject, injectable } from "inversify";
-import UserRepository from "../repositories/UserRepository";
 import { User } from "../models/User";
-import { Repository, LoginSuccess } from "../types";
-import AuthService from './AuthService';
+import { LoginSuccess } from "../types";
+import AuthService from '../security/AuthService';
+import { UserService,Repository } from "../interfaces";
 
 @injectable()
-export default class UserService {
+export default class UserServiceImpl implements UserService {
+ 
     @inject('UserRepository') userRepository: Repository<User>
     @inject('AuthService') authService: AuthService
     async createUser(user: User){
         return this.userRepository.create(user)
     }
-
+ 
     async login(email: string, password: string): Promise<LoginSuccess>{
         let userExists = await this.userRepository.find({
             email
@@ -43,6 +44,17 @@ export default class UserService {
             throw new Error("Email is already used.")
         }
         user.password = this.authService.hashPassword(user.password)
-        return this.userRepository.create(user)
+        let data = await this.userRepository.create(user)
+        return {
+            _id: data._id,
+            email: data.email,
+            firstName: data.firstName,
+            lastName: data.lastName,
+        }
+    }
+
+    async findById(_id: string): Promise<User> {
+        let user = await this.userRepository.findById(_id)
+        return user
     }
 }

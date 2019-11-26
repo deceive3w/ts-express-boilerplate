@@ -1,4 +1,4 @@
-import { Repository } from "../types";
+import { Repository } from "../interfaces";
 import { Model, Query, Document, DocumentQuery } from "mongoose";
 import { injectable, decorate, unmanaged } from "inversify";
 

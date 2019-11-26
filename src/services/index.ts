@@ -1,6 +1,4 @@
-import UserService from './UserService';
-import AuthService from './AuthService';
+import UserServiceImpl from './UserServiceImpl';
 export {
-    UserService,
-    AuthService
+    UserServiceImpl,
 }
