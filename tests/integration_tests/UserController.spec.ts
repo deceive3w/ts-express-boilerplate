@@ -1,18 +1,18 @@
-import UserController from '../src/controllers/UserController';
-import { User,  UserModel} from '../src/models';
+import UserController from '../../src/controllers/UserController';
+import { User,  UserModel} from '../../src/models';
 import { Container } from 'inversify';
 import request from 'supertest'
-import server from '../src/utils/express/server'
+import server from '../../src/utils/express/server'
 import express from 'express'
-import UserRepository from '../src/repositories/UserRepository';
+import UserRepository from '../../src/repositories/UserRepository';
 
-import MongoMemoryConnection from '../src/utils/mongodb/memory-connection'
-import { UserService } from '../src/interfaces'
-import { UserServiceImpl } from '../src/services';
-import { AuthMiddleware } from '../src/middlewares'
-import { TYPES } from '../src/types';
-import AuthService from '../src/security/AuthService';
-import AuthProvider from '../src/security/AuthProvider'
+import MongoMemoryConnection from '../../src/utils/mongodb/memory-connection'
+import { UserService } from '../../src/interfaces'
+import { UserServiceImpl } from '../../src/services';
+import { AuthMiddleware } from '../../src/middlewares'
+import { TYPES } from '../../src/types';
+import AuthService from '../../src/security/AuthService';
+import AuthProvider from '../../src/security/AuthProvider'
 describe("User Controller Test", ()=>{
     let container: Container = new Container()
     let app: express.Application

@@ -1,10 +1,10 @@
 import "reflect-metadata";
 import { Container } from "inversify";
-import { UserModel, User } from "../models";
-import UserRepository from "./UserRepository";
+import { UserModel, User } from "../../../src/models";
+import UserRepository from "../../../src/repositories/UserRepository";
 import mongoose, { Mongoose } from "mongoose";
-import MongoMemoryConnection from '../utils/mongodb/memory-connection'
-import MemoryConnection from "../utils/mongodb/memory-connection";
+import MongoMemoryConnection from '../../../src/utils/mongodb/memory-connection'
+import MemoryConnection from "../../../src/utils/mongodb/memory-connection";
 describe('Testing User Repository', ()=>{
     let container = new Container()
 
