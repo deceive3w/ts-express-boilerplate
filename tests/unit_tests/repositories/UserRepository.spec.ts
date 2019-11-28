@@ -9,11 +9,10 @@ describe('Testing User Repository', ()=>{
     let container = new Container()
 
     beforeAll(async (done)=>{
-        await MongoMemoryConnection.getConnection((connection)=>{
-            container.bind('UserModel').to(UserModel)
-            container.bind('UserRepository').to(UserRepository)
-            done()
-        })
+        await MongoMemoryConnection.getConnection()
+        container.bind('UserModel').to(UserModel)
+        container.bind('UserRepository').to(UserRepository)
+        done()
     })
 
     test('it should can create', async()=>{

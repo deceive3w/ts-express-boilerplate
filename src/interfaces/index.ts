@@ -1,8 +1,13 @@
-import UserRepository from './UserRepository.interface'
-import UserService from './UserService.interface'
-import Repository from './Repository.interface'
+import UserService from './UserService'
+import Repository from './Repository'
+import RoleService from './RoleService'
+import PrivilegeService from './PrivilegeService'
+import Principal from './Principal'
+
 export {
-    UserRepository,
     UserService,
-    Repository
+    Principal,
+    Repository,
+    RoleService,
+    PrivilegeService
 }

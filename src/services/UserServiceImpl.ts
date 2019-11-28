@@ -1,8 +1,9 @@
-import { inject, injectable } from "inversify";
+import { inject, injectable, id } from "inversify";
 import { User } from "../models/User";
 import { LoginSuccess } from "../types";
 import AuthService from '../security/AuthService';
-import { UserService,Repository } from "../interfaces";
+import { UserService, Repository } from "../interfaces";
+import { Role } from "../models";
 
 @injectable()
 export default class UserServiceImpl implements UserService {
@@ -44,12 +45,18 @@ export default class UserServiceImpl implements UserService {
             throw new Error("Email is already used.")
         }
         user.password = this.authService.hashPassword(user.password)
+
         let data = await this.userRepository.create(user)
+        const token = this.authService.generateToken({
+            userId: data._id,
+            email: data.email,
+        })
         return {
             _id: data._id,
             email: data.email,
             firstName: data.firstName,
             lastName: data.lastName,
+            token
         }
     }
 

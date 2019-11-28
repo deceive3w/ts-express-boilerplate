@@ -1,32 +1,36 @@
-import UserController from '../../src/controllers/UserController';
-import { User,  UserModel} from '../../src/models';
+import UserController from '../../../src/controllers/UserController';
+import { User,  UserModel} from '../../../src/models';
 import { Container } from 'inversify';
 import request from 'supertest'
-import server from '../../src/utils/express/server'
+import server from '../../../src/utils/express/server'
 import express from 'express'
-import UserRepository from '../../src/repositories/UserRepository';
-
-import MongoMemoryConnection from '../../src/utils/mongodb/memory-connection'
-import { UserService } from '../../src/interfaces'
-import { UserServiceImpl } from '../../src/services';
-import { AuthMiddleware } from '../../src/middlewares'
-import { TYPES } from '../../src/types';
-import AuthService from '../../src/security/AuthService';
-import AuthProvider from '../../src/security/AuthProvider'
+import UserRepository from '../../../src/repositories/UserRepository';
+import AuthService from '../../../src/security/AuthService';
+import AuthProvider from '../../../src/security/AuthProvider'
+import MongoMemoryConnection from '../../../src/utils/mongodb/memory-connection'
+import { UserService, RoleService } from '../../../src/interfaces'
+import { UserServiceImpl, RoleServiceImpl } from '../../../src/services';
+import { AuthMiddleware } from '../../../src/middlewares'
+import { TYPES } from '../../../src/types';
+import { RoleRepository } from '../../../src/repositories';
+import Principal from '../../../src/security/Principal';
 describe("User Controller Test", ()=>{
     let container: Container = new Container()
     let app: express.Application
     let token: string
     beforeAll(async ()=>{
-        await MongoMemoryConnection.getConnection(()=>{
-            container.bind<UserService>('UserService').to(UserServiceImpl)
-            container.bind<AuthMiddleware>(TYPES.AuthMiddleware).to(AuthMiddleware)
-            container.bind<UserController>('UserController').to(UserController)
-            container.bind<UserRepository>('UserRepository').to(UserRepository)
-            container.bind<AuthService>('AuthService').to(AuthService)
-            container.bind('UserModel').to(UserModel)
-            app = server(container, AuthProvider).build()
-        })
+        await MongoMemoryConnection.getConnection()
+        container.bind<UserService>(TYPES.UserService).to(UserServiceImpl)
+        container.bind<AuthMiddleware>(TYPES.AuthMiddleware).to(AuthMiddleware)
+        container.bind<AuthService>(TYPES.AuthService).to(AuthService)
+        container.bind<AuthProvider>(TYPES.AuthProvider).to(AuthProvider)
+        container.bind<RoleService>(TYPES.RoleService).to(RoleServiceImpl)
+        container.bind<UserController>(TYPES.UserController).to(UserController)
+        container.bind<UserRepository>(TYPES.UserRepository).to(UserRepository)
+        container.bind<RoleRepository>(TYPES.RoleRepository).to(RoleRepository)
+        container.bind<Principal>("Principal").to(Principal)
+        container.bind('UserModel').to(UserModel)
+        app = server(container, AuthProvider).build()
     })
 
     test('it should validate register', async ()=>{

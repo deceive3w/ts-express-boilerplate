@@ -34,22 +34,10 @@ export default class CrudRepository<M> implements Repository<M>{
             })
         })
     }
-    find(param?: M): Promise<M[]> {
-        return new Promise((resolve, reject)=>{
-            this.model.find(param).then((res)=>{
-                resolve(res)
-            }).catch((err)=>{
-                reject(err)
-            })
-        })
+    find(param?: M): DocumentQuery<M[], null, {}>{
+        return this.model.find(param)
     }
-    findById(id: string):Promise<M | null> {
-        return new Promise((resolve, reject)=>{
-            this.model.findById(id).then((res)=>{
-                resolve(res)
-            }).catch((err)=>{
-                reject(err)
-            })
-        })
+    findById(id: string):DocumentQuery<M, null, {}> {
+        return this.model.findById(id)
     }
 }

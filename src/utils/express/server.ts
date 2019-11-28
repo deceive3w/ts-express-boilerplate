@@ -1,6 +1,5 @@
 import { InversifyExpressServer, interfaces } from "inversify-express-utils";
 import bodyParser from 'body-parser';
-import '../../controllers/UserController'
 import express from 'express'
 export default (container, authProvider?) =>{
     const app = express()

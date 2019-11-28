@@ -3,15 +3,40 @@ import { User } from "./models";
 
 export const TYPES = {
     AuthMiddleware: "AuthMiddleware",
-    UserRepository: "UserRepository",
+    AuthService: "AuthService",
+    AuthProvider: "AuthProvider",
+
+    UserController: "UserController",
     UserService: "UserService",
-    AuthService: "AuthService"
+    UserRepository: "UserRepository",
+
+    RoleController: "RoleController",
+    RoleService: "RoleService",
+    RoleRepository: "RoleRepository",
+
+
+    PrivilegeController: "PrivilegeController",
+    PrivilegeService: "PrivilegeService",
+    PrivilegeRepository: "PrivilegeRepository",
+
+    DatabaseInitilizer: "DatabaseInitilizer"
 }
 
-export interface LoginSuccess{
-    _id: string,
-    email: string,
-    firstName: string,
-    lastName: string,
+export enum ACTION {
+    createOwn = "createOwn",
+    createAny = "createAny",
+    updateOwn = "updateOwn",
+    updateAny = "updateAny",
+    findOwn = "findOwn",
+    findAny = "findAny",
+    findById = "findById",
+    deleteOwn = "deleteOwn",
+    deleteAny = "deleteAny",
+}
+
+export interface RegisterSuccess extends User {
+    token: string
+}
+export interface LoginSuccess extends User {
     token: string
 }
