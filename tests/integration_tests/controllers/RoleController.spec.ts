@@ -40,7 +40,7 @@ describe("Role Controller Test", ()=>{
 
     test('it should can register admin with role', async ()=>{
         let adminRole = await container.get<RoleService>(TYPES.RoleService).createRole({
-            name:'admin',
+            name:'superadmin',
             privileges:[{privilege: 'CREATE_ROLE'}, {privilege:'FIND_ROLE'}, {privilege:'DELETE_ROLE'}, {privilege:'UPDATE_ROLE'}],
         })
 

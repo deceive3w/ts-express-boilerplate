@@ -17,7 +17,6 @@ export function authenticated (role: RoleFilter): any {
                 if(role){
                     try{
                         const isInPermission = await authProvider.isInPermissions(role)
-                        console.log("is in permission", isInPermission)
                         if(!isInPermission){
                             _response
                                 .status(403)
@@ -25,7 +24,6 @@ export function authenticated (role: RoleFilter): any {
                             return _response
                         }
                     }catch(e){
-                        console.log("ee", e)
                         _response
                             .status(403)
                             .send({ error: "The user is not have permission." });

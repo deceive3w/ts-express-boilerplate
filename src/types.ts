@@ -2,6 +2,7 @@ import { Query, DocumentQuery, Document } from "mongoose";
 import { User } from "./models";
 
 export const TYPES = {
+    Principal: "Principal",
     AuthMiddleware: "AuthMiddleware",
     AuthService: "AuthService",
     AuthProvider: "AuthProvider",

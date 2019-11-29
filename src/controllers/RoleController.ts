@@ -19,8 +19,9 @@ export default class RoleController extends Controller{
     }
 
     @httpGet("/")
-    @authenticated({hasRole: 'admin'})
-    findAll(){
-        return this.json([])
+    @authenticated({hasRole: 'superadmin'})
+    async findAll(){
+        const roles = await this.roleService.find()
+        return this.json(roles)
     }
 }
