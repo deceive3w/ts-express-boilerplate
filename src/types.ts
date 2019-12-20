@@ -1,5 +1,4 @@
 import { Query, DocumentQuery, Document } from "mongoose";
-import { User } from "./models";
 
 export const TYPES = {
     Principal: "Principal",
@@ -33,11 +32,4 @@ export enum ACTION {
     findById = "findById",
     deleteOwn = "deleteOwn",
     deleteAny = "deleteAny",
-}
-
-export interface RegisterSuccess extends User {
-    token: string
-}
-export interface LoginSuccess extends User {
-    token: string
 }

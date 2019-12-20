@@ -1,7 +1,5 @@
-import UserController from "./UserController";
-import RoleController from "./RoleController";
+import PostController from './PostController'
 
 export {
-    UserController,
-    RoleController
+    PostController
 }

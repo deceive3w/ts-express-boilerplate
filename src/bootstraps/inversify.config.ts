@@ -1,34 +1,19 @@
 import { Container } from "inversify";
-import { UserService, RoleService, Principal as IPrincipal, PrivilegeService} from "../interfaces";
-import { UserServiceImpl, RoleServiceImpl, PrivilegeServiceImpl } from "../services";
-import { AuthMiddleware } from "../middlewares";
-import { UserController, RoleController } from "../controllers";
-import { UserRepository, RoleRepository, PrivilegeRepository } from "../repositories";
-import AuthService from "../security/AuthService";
-import { UserModel } from "../models";
-import { TYPES } from "../types";
-import DatabaseInitialization from "./DatabaseInitializer";
-import Principal from "../security/Principal";
-import AuthProvider from "../security/AuthProvider";
-
+import { PostRepository } from "../repositories";
+import { getConnection, getCustomRepository } from "typeorm";
+import { PostService } from "../interfaces/service/PostService.interface";
+import PostServiceImpl from "../services/PostServiceImpl";
+import { PollRepository } from "../repositories/PollRepository";
+import AuthService from "../interfaces/security/AuthService.interface";
+import AuthServiceImpl from "../security/AuthService";
 
 let container = new Container();
-container.bind<DatabaseInitialization>(TYPES.DatabaseInitilizer).to(DatabaseInitialization)
-
-container.bind<AuthMiddleware>(TYPES.AuthMiddleware).to(AuthMiddleware)
-container.bind<AuthProvider>(TYPES.AuthProvider).to(AuthProvider)
-container.bind<AuthService>(TYPES.AuthService).to(AuthService)
-container.bind<IPrincipal>(TYPES.Principal).to(Principal)
-
-container.bind<UserController>(TYPES.UserController).to(UserController)
-container.bind<UserService>(TYPES.UserService).to(UserServiceImpl)
-container.bind<UserRepository>(TYPES.UserRepository).to(UserRepository)
-
-container.bind<RoleController>(TYPES.RoleController)
-container.bind<RoleService>(TYPES.RoleService).to(RoleServiceImpl)
-container.bind<RoleRepository>(TYPES.RoleRepository).to(RoleRepository)
-
-container.bind<PrivilegeRepository>(TYPES.PrivilegeRepository).to(PrivilegeRepository)
-container.bind<PrivilegeService>(TYPES.PrivilegeService).to(PrivilegeServiceImpl)
-
+container.bind<PostRepository>("PostRepository").toDynamicValue(()=>{
+    return getCustomRepository(PostRepository)
+})
+container.bind<PollRepository>("PollRepository").toDynamicValue(()=>{
+    return getCustomRepository(PollRepository)
+})
+container.bind<PostService>("PostService").to(PostServiceImpl)
+container.bind<AuthService>("AuthService").to(AuthServiceImpl)
 export { container }

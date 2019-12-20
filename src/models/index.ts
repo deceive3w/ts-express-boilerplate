@@ -1,11 +1,6 @@
-import UserModel, { User } from "./User";
-import RoleModel, { Role } from './Role'
-import PrivilegeModel, { Privilege } from './Privilege'
+import Post from "./Post";
+import Poll from "./Poll";
 export {
-    UserModel,
-    User,
-    RoleModel,
-    Role,
-    PrivilegeModel,
-    Privilege
+    Post,
+    Poll
 }

@@ -2,8 +2,10 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET, JWT_EXPIRED } from '../config';
 import { injectable } from 'inversify';
+import AuthService from '../interfaces/security/AuthService.interface';
+import axios from 'axios'
 @injectable()
-export default class AuthService{
+export default class AuthServiceImpl implements AuthService{
     hashPassword(password: string){
         return bcrypt.hashSync(password, 8)
     }
@@ -15,14 +17,18 @@ export default class AuthService{
             expiresIn: JWT_EXPIRED,
         })
     }
-    getPayload(token): object{
-        try{
-            let jwtPayload = jwt.verify(token, JWT_SECRET) as object
-            return jwtPayload
-        }catch(e){
-            return {
-                error: 'Invalid Token.'
-            }
+    async getPayload(token): Promise<any>{
+        if(!token){
+            return Promise.reject("Invalid Token.")
         }
+        let url = "http://api.rekeningku.net/profile"
+        let result = await axios({
+            url,
+            method:'post',
+            headers:{
+                token
+            }
+        })
+        return result.data
     }
 }
