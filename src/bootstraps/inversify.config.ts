@@ -6,6 +6,8 @@ import PostServiceImpl from "../services/PostServiceImpl";
 import { PollRepository } from "../repositories/PollRepository";
 import AuthService from "../interfaces/security/AuthService.interface";
 import AuthServiceImpl from "../security/AuthService";
+import AuthProvider from "../interfaces/security/AuthProvider.interface";
+import AuthProviderImpl from "../security/AuthProvider";
 
 let container = new Container();
 container.bind<PostRepository>("PostRepository").toDynamicValue(()=>{
@@ -16,4 +18,5 @@ container.bind<PollRepository>("PollRepository").toDynamicValue(()=>{
 })
 container.bind<PostService>("PostService").to(PostServiceImpl)
 container.bind<AuthService>("AuthService").to(AuthServiceImpl)
+container.bind<AuthProvider>("AuthProvider").to(AuthProviderImpl)
 export { container }

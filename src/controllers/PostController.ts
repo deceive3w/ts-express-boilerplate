@@ -4,7 +4,7 @@ import { inject } from "inversify";
 import Controller from './Controller';
 import { TYPES, ACTION } from '../types';
 import { body, validationResult } from "express-validator";
-import { validator } from "../security/decorator";
+import { validator, authenticated } from "../security/decorator";
 import { PostService } from "../interfaces/service/PostService.interface";
 import Post from "../models/Post";
 
@@ -16,11 +16,12 @@ export default class PostController extends Controller{
     @validator([
         body('text').exists().withMessage("Post cannot be empty.")
     ])
+    @authenticated()
     async createPost(){
         try{
             let post = new Post()
             post.text = this.httpContext.request.body.text
-            post.userId = 1
+            post.userId = this.httpContext.response.locals.user.id
             let data = await this.postService.createPost(post)
             return this.json(data)
         }catch(e){
